@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -50,5 +52,35 @@ class UserController extends Controller
         User::create($dadosValidados);
 
         return redirect('/admin')->with('sucesso', 'Usuário cadastrado com sucesso');
+    }
+    /**
+     * localiza o usuário pelo id e exibe o formulário de edição preenchido
+     */
+    public function edit($id){
+        $usuarios = User::findOrFail($id);
+
+        return view('users.edit', compact('usuarios'));
+    }
+    
+    /**
+     * Valida os novos dados e atualiza o registro no banco de dados.
+     */
+    public function update(Request $request, $id) {
+        $usuario = User::findOrFail($id);
+
+        $dadosValidados = $request->validate([
+            'name' => 'required|min:3|max:255',
+            'email' => [
+                'required', 'email',
+                Rule::unique('users')->ignore($usuario->id),
+            ],
+            'password' => 'nullable|min:6'
+        ]);
+        if (empty($dadosValidados['password'])){
+            unset($dadosValidados['password']);
+        }
+
+        $usuario->update($dadosValidados);
+        return redirect('/admin')->with('sucesso', 'Usuário atualizado com sucesso');
     }
 }

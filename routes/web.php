@@ -24,6 +24,9 @@ Route::get('/usuarios/novo',[UserController::class, 'create']);
 //rota para salvar os dados enviados POST
 Route::post('/usuarios', [UserController::class , 'store']);
 
+//Rotas de edição
+Route::get('/usuarios/{id}/editar', [UserController::class , 'edit']);
+Route::put('/usuarios/{id}', [UserController::class , 'update']);
 
 Route::get('/produtos', [ProdutoController::class , 'index']);
 
