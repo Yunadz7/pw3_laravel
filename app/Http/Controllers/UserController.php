@@ -57,9 +57,9 @@ class UserController extends Controller
      * localiza o usuário pelo id e exibe o formulário de edição preenchido
      */
     public function edit($id){
-        $usuarios = User::findOrFail($id);
+        $usuario = User::findOrFail($id);
 
-        return view('users.edit', compact('usuarios'));
+        return view('users.edit', compact('usuario'));
     }
     
     /**
@@ -82,5 +82,14 @@ class UserController extends Controller
 
         $usuario->update($dadosValidados);
         return redirect('/admin')->with('sucesso', 'Usuário atualizado com sucesso');
+    }
+    // Remove o registro do usuário no banco de dados
+    public function destroy ($id)
+    {
+        $usuario = User::FindOrFail($id);
+        //Executa a exclusão do registro
+        $usuario->delete();
+
+        return redirect('/admin')->with('sucesso', 'Item removido com sucesso.');
     }
 }
