@@ -3,7 +3,9 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Http\Controllers\ProdutoCategoriaController;
 
+Route::resource('produtoscategoria', ProdutoCategoriaController::class);
 Route::get('/', function () {
     return view('home');
 });
