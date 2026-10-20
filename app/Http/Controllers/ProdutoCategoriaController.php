@@ -14,7 +14,7 @@ class ProdutoCategoriaController extends Controller
     public function index()
     {
         $produtos = Produto::with('categoria')->orderBy('id', 'desc')->paginate(10);
-        return view('produtos.index', compact('produtos'));
+        return view('produtoscategoria.index', compact('produtos'));
     }
 
     /**
@@ -23,7 +23,7 @@ class ProdutoCategoriaController extends Controller
     public function create()
     {
         $categorias = Categoria::orderBy('nome', 'asc')->get();
-        return view('produtos.create', compact('categorias'));
+        return view('produtoscategoria.create', compact('categorias'));
     }
 
     /**
@@ -40,7 +40,7 @@ class ProdutoCategoriaController extends Controller
 
         Produto::create($dadosValidados);
 
-        return redirect()->route('produtos.index')->with('sucesso', 'Produto cadastrado com sucesso');
+        return redirect()->route('produtoscategoria.index')->with('sucesso', 'Produto cadastrado com sucesso');
     }
 
     /**
@@ -48,7 +48,7 @@ class ProdutoCategoriaController extends Controller
      */
     public function show(Produto $produto)
     {
-        return view('produtos.show', compact('produto'));
+        return view('produtoscategoria.show', compact('produto'));
     }
 
     /**
@@ -57,7 +57,7 @@ class ProdutoCategoriaController extends Controller
     public function edit(Produto $produto)
     {
         $categorias = Categoria::orderBy('nome', 'asc')->get();
-        return view('produtos.edit', compact('produto', 'categorias'));
+        return view('produtoscategoria.edit', compact('produto', 'categorias'));
     }
 
     /**
@@ -74,7 +74,7 @@ class ProdutoCategoriaController extends Controller
 
         $produto->update($dadosValidados);
 
-        return redirect()->route('produtos.index')->with('sucesso', 'Produto atualizado com sucesso');
+        return redirect()->route('produtoscategoria.index')->with('sucesso', 'Produto atualizado com sucesso');
     }
 
     /**
@@ -84,6 +84,6 @@ class ProdutoCategoriaController extends Controller
     {
         $produto->delete();
 
-        return redirect()->route('produtos.index')->with('sucesso', 'Produto removido com sucesso');
+        return redirect()->route('produtoscategoria.index')->with('sucesso', 'Produto removido com sucesso');
     }
 }
